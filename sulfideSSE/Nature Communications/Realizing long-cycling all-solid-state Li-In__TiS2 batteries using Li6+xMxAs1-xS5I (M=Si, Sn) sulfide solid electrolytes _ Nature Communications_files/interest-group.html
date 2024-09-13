@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!-- saved from url=(0287)https://fledge.us.criteo.com/interest-group?data=uiFXunxiNE1VMk9GOHdjMlNpL1ZpRmk2ZE9pZHBVVTJ5S1NYaWxQQmhWY3Z2TUdzZVduYVVJMlJLd3JwUTZKSzZBcnlaSGhPcEFlTC9uZU5QelBLeFZsRnBBQlI5ZVRpMnlVZ3A0cVVEVjZQYmRIT25Xci9lQlUyUll2NjVxN0NUWWE5bE9pUVhsL25neXVKcDNWOEloclpKcGxvNW9rK1UrcFdxcEJRQ0w3Nk5SNTQ9fA -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>Fledge IFrame</title>
+</head>
+<body data-new-gr-c-s-check-loaded="14.1195.0" data-gr-ext-installed="">
+
+<script>
+    function getBswIg(src) {
+        const elt = document.createElement("iframe");
+        elt.allow = "join-ad-interest-group";
+        elt.width = "0";
+        elt.height = "0";
+        elt.style.display = "none";
+        elt.title = "BSW IG";
+        elt.src = src;
+
+        document.body.appendChild(elt);
+    }
+
+    if (!navigator.joinAdInterestGroup) {
+        console.log("No fledge for you!");
+    } else {
+        var igs = [{"owner":"https://fledge.us.criteo.com","name":"ITwoznxPYW5vQXlESGVPclpwVXVmSDAyVEd3PT18","lifetimeMs":2592000000,"priorityVector":{"browserSignals.ageInMinutes":-1,"browserSignals.one":-86400},"biddingLogicURL":"https://fledge.us.criteo.com/simplebid?platform=us","biddingWasmHelperURL":"https://fledge.us.criteo.com/criteo.wasm","trustedBiddingSignalsURL":"https://fledge.us.criteo.com/getvalues","trustedBiddingSignalsKeys":["LlkdxnxXZ044YzZlUmZpNXVRbUw0Z25TUHByK0U0bkdJOWFvdE43WWdlbVUyK0lHbzFDcUtyVGowbmMzREdSTjNjK0FLUTRxM2NibDY4UDBQQUN4OTd3NXFUU1l3c295R25FMHdkaVlhWFJQUURSSDNRcW9zSGtRdU5la0YwNlpFK1lyR3w"],"maxTrustedBiddingSignalsURLLength":32768,"userBiddingSignals":{},"updateURL":"https://fledge.us.criteo.com/interest-group/update?key=ZJcYgnxSK1crV3ZqZEdvN0JlNmphU0pPdjVaejA4WmRpM05XZWFHV1VKQkF0V2pFcTNxS1FxakR3Y1BoSk9FbGxLVThLS1lvWWtqeFg0ZmlHY3djSEo0OG9hZkZGcnc2SUpHVUxXaEtuS3liQ0tVd0s5dGhCMm1WdVBBaW1zci9abG92Mnw","ads":[],"adComponents":[],"trustedBiddingSignalsSlotSizeMode":"slot-size","executionMode":"group-by-origin","sellerCapabilities":{"*":["interest-group-counts","latency-stats"]}}];
+        var expiration = 2592000;
+        var errorEndpoint = "https://fledge.us.criteo.com/interest-group/error?pid=60881";
+        if (navigator.joinAdInterestGroup.length == 1) {
+            for (const ig of igs) {
+                navigator.joinAdInterestGroup(ig).catch((e) => fetch(`${errorEndpoint}&message=${encodeError(e)}`));
+            }
+        } else {
+            // This is for backwards-compatibility
+            // The 1 - arg implementation is future - proof
+            for (const ig of igs) {
+                navigator.joinAdInterestGroup(ig, expiration).catch((e) => fetch(`${errorEndpoint}&message=${encodeError(e)}`));
+            }
+        }
+        if (false) {
+            getBswIg("https://dsp-paapi-sandbox.bsw-ig.criteo.com/paapi/trade/dsp/api/interest_group_join/bsw-sb-ig-test-1");
+            getBswIg("https://paa-proxy-dsp.bsw-sb.criteo.com/paapi/paa-proxy/dsp/api/interest_group_join/bsw-sb-ig-paa-proxy");
+        }
+    }
+
+    function encodeError(error) {
+        return encodeURIComponent(error.name + ':' + error.message);
+    }
+
+    async function measureAudienceSize() {
+        // Measuring audience size
+        // Register worklet
+        if((!window?.sharedStorage?.worklet?.addModule) || (!window?.sharedStorage?.run)){
+            return;
+        }
+        await window.sharedStorage.worklet.addModule('');
+
+        // Run audience size measurement operation
+        await window.sharedStorage.run('audience-size-measurement', {
+            data: { bucketKey: BigInt('1948196'), contributionValue: 8192}
+        });
+    }
+
+    //TODO reactivate audience-size-measurement
+    //measureAudienceSize();
+
+</script>
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;limited&quot;,&quot;isActive&quot;:false,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>

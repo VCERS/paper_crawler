@@ -1,0 +1,44 @@
+
+<!-- saved from url=(0043)https://postrelease.com/iframes/topics.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+
+<body data-new-gr-c-s-check-loaded="14.1195.0" data-gr-ext-installed="">
+  <script>
+    async function getTopics() {
+      try {
+        const topics = await document.browsingTopics();
+        const topicIds = topics.map(topic => topic.topic).join(',');
+        
+        // Target origin is unknown so '*' is used for any origin
+        window.top.postMessage({ topicIds }, '*');
+      } catch(error) {
+        console.error('An error occurred with the Topics API:', error);
+      } 
+    }
+    getTopics();
+  </script>
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;limited&quot;,&quot;isActive&quot;:false,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>

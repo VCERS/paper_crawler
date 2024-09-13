@@ -1,0 +1,15 @@
+beautifulsoup4
+certifi
+chardet
+idna
+numpy
+pandas
+progressbar2
+python-dateutil
+python-utils
+pytz
+requests
+selenium
+six
+soupsieve
+urllib3

@@ -1,0 +1,374 @@
+
+<!-- saved from url=(0045)https://www.nature.com/articles/nenergy201630 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" src="./publishertag.prebid.144.js"></script><script>
+            function onVisible(element, callback) {
+                  new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                      if(entry.intersectionRatio > 0) {
+                        callback(element);
+                        observer.disconnect();
+                      }
+                    });
+                  }).observe(element);
+                }
+                
+            function loadLabel() {
+                const label = document.createElement('div');
+                label.style.position = 'absolute';
+                label.style.bottom = '0';
+                label.style.left = '0';
+                label.style.width = '42px';
+                label.style.height = '30px';
+                label.style.textAlign = 'center';
+                label.style.color = 'black';
+                label.style.backgroundColor = 'rgb(253 253 255)';
+                label.style.paddingTop = '11px';
+                label.style.opacity = '0.9';
+                label.style.fontFamily = 'sans-serif';
+                label.innerText = '0';
+                document.body.appendChild(label)
+            }
+            
+        </script>
+        <meta http-equiv="origin-trial" content="AlK2UR5SkAlj8jjdEc9p3F3xuFYlF6LYjAML3EOqw1g26eCwWPjdmecULvBH5MVPoqKYrOfPhYVL71xAXI1IBQoAAAB8eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="Amm8/NmvvQfhwCib6I7ZsmUxiSCfOxWxHayJwyU1r3gRIItzr7bNQid6O8ZYaE1GSQTa69WwhPC9flq/oYkRBwsAAACCeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="A9uiHDzQFAhqALUhTgTYJcz9XrGH2y0/9AORwCSapUO/f7Uh7ysIzyszNkuWDLqNYg8446Uj48XIstBW1qv/wAQAAACNeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3Mjc4MjcxOTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A9R+gkZL3TWq+Z7RJ2L0c7ZN7FZD5z4mHmVvjrPitg/EMz9P3j5d3W7Vw5ZR9jtJGmWKltM4BO3smNzpCgwYuwwAAACTeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3Mjc4MjcxOTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><script src="./f(1).txt" async=""></script></head><body marginwidth="0" marginheight="0" data-new-gr-c-s-check-loaded="14.1195.0" data-gr-ext-installed="" data-new-gr-c-s-loaded="14.1195.0">
+            <script async="" src="./f.txt"></script>
+            <script async="" src="./prebid8.39.0.js"></script>
+            
+            <script>
+                function getPlacementScriptElement(){
+                        if (document.currentScript)
+                            return document.currentScript;
+                        else {
+                            var scripts = document.getElementsByTagName('script');
+                            var currentScript_2 = scripts[scripts.length - 1];
+                            return currentScript_2;
+                        }
+                    }
+            </script>
+            <script>
+                var timestamp = Date.now();
+                function addRenderListener() {
+                    googletag.pubads().addEventListener('slotRenderEnded', function(event) {
+                       var orderId = event.campaignId;
+                       
+                       var winnerBids = pbjs.getAllPrebidWinningBids();
+                       var winnerBid;
+                       var cpm, bidder;
+                       if (winnerBids.length) {
+                           winnerBid = winnerBids[0]
+                           cpm = winnerBid.cpm
+                           bidder = winnerBid.bidder
+                       }
+                       
+                       onVisible(document.querySelector("#div-gpt-ad-359122865531-0"), () => {
+                            parent.parent.window.postMessage({
+                                        message: "ex-" + 1670087866999 + '-' + "vvpejbk" + '-' + 0,
+                                        event: 'viewable'
+                                    }, "*");
+                            return
+                        });
+                        /*
+                        * Muestro bid ganador
+                        * */
+                        if (event.isEmpty && winnerBid) {
+                            var iframe = document.querySelector("[id*=beyond_postbid_if_]") || document.createElement('iframe');
+                            iframe.setAttribute('id', 'beyond_postbid_if_' + Date.now());
+                            iframe.frameBorder = '0';
+                            iframe.scrolling = 'no';
+                            iframe.marginWidth = '0';
+                            iframe.marginHeight = '0';
+                            iframe.TOPMARGIN = '0';
+                            iframe.LEFTMARGIN = '0';
+                            iframe.ALLOWTRANSPARENCY = 'true';
+                            iframe.width = '100%';
+                            iframe.height = '100%'
+                            
+                            var plmntScriptElement = getPlacementScriptElement();
+                            var timestamp = Date.now()
+                            plmntScriptElement.parentNode.insertBefore(iframe, plmntScriptElement);
+                            iframe.contentWindow.document.write(winnerBid.ad);
+                            orderId = 2937448783;
+                        }
+                       /*
+                       * PREBID ORDER
+                       * */    
+                       if (orderId === 2937448783) {
+                           parent.parent.window.postMessage({
+                                message: "report-cpm-" + 1670087866999,
+                                cpm,
+                                bidder,
+                                id: timestamp,
+                                type: "prebid"
+                            }, "*");
+                           
+                           parent.parent.window.postMessage({
+                                event: 'imp',
+                                message: "ex-" + 1670087866999 + '-' + "vvpejbk" + '-' + 0,
+                                cpm,
+                                bidder,
+                                id: timestamp,
+                                type: "prebid",
+                                campaignType: 1
+                            }, "*");
+                           return
+                       } 
+                       
+                       /*
+                       * ADX ORDER
+                       * */
+                       else if (orderId === 2409339812) {
+                           parent.parent.window.postMessage({
+                                message: "report-cpm-" + 1670087866999,
+                                bidder: "google",
+                                cpm: (cpm || 0) + 0.01,
+                                id: timestamp,
+                                type: "prebid"
+                            }, "*");
+                           
+                           parent.parent.window.postMessage({
+                                event: 'imp',
+                                message: "ex-" + 1670087866999 + '-' + "vvpejbk" + '-' + 0,
+                                bidder: "google",
+                                cpm: (cpm || 0) + 0.01,
+                                id: timestamp,
+                                type: "prebid",
+                                campaignType: 1
+                            }, "*");
+                           return
+                       }
+                       
+                       /*
+                       * OTHER ORDER
+                       * */
+                       else {
+                           parent.parent.window.postMessage({
+                                message: "report-cpm-" + 1670087866999,
+                                bidder: "other",
+                                cpm: (cpm || 0),
+                                id: timestamp,
+                                type: "prebid"
+                            }, "*");
+                           
+                           parent.parent.window.postMessage({
+                                event: 'imp',
+                                message: "ex-" + 1670087866999 + '-' + "vvpejbk" + '-' + 0,
+                                bidder: "gam",
+                                cpm: (cpm || 0),
+                                id: timestamp,
+                                type: "prebid",
+                                campaignType: 2
+                            }, "*");
+                           return
+                       }
+                   
+                       var bidResponses;
+                       var highestBidCpm = 0;
+                       
+                       if (bidResponses && bidResponses.bids.length) {
+                           try { 
+                               highestBidCpm = bidResponses.bids.sort((a, b) => parseFloat(a.cpm) - parseFloat(b.cpm))[0].cpm;
+                           } catch (e) {}
+                       }
+                       
+                       if (highestBidCpm) {
+                           data = {
+                               ...data,
+                               cpm: highestBidCpm
+                           }
+                       }
+                        
+                        parent.window.postMessage(data, "*");
+                   });
+                }
+            </script>
+            
+            
+            <script>
+                var PREBID_TIMEOUT = 3000;
+                var FAILSAFE_TIMEOUT = 3000;
+            
+                var sizes = [[300,250]];
+                let { bids } = {"code":"","mediaTypes":{"banner":{"sizes":[[300,250]]}},"bids":[{"bidder":"criteo","params":{"zoneId":"1491572"}},{"bidder":"appnexus","params":{"domain":"https://prg-apac.smartadserver.com/","siteId":"374010","pageId":"1314150","formatId":"71867"}},{"bidder":"smartadserverAlias","params":{"domain":"https://prg.smartadserver.com","siteId":"555020","pageId":"1691712","formatId":"88200"}},{"bidder":"pubmatic","params":{"publisherId":"156383","adSlot":"nature_300x250_ATF","kadpageurl":"nature.com"}},{"bidder":"sovrn","params":{"tagid":"794324"}},{"bidder":"richaudience","params":{"pid":"MP_quxufDBTNs","supplyType":"site"}},{"bidder":"improvedigital","params":{"placementId":"22865368"}},{"bidder":"rtbhouse","params":{"publisherId":"gIPLghFuPzxPZOK4FRuK","region":"prebid-eu","channel":"1971"}}]};
+            
+                var adUnits = [
+                    {
+                        code: '/21671350435,22684505004/300x250-nature.com',
+                        sizes,
+                        mediaTypes: {
+                            banner: {
+                                sizes
+                            }
+                        },
+                        bids
+                    },
+                ];
+                
+                var googletag = googletag || {};
+                googletag.cmd = googletag.cmd || [];
+                googletag.cmd.push(function() {
+                    googletag.pubads().disableInitialLoad();
+                });
+            
+                var pbjs = pbjs || {};
+                pbjs.que = pbjs.que || [];
+    
+                
+                
+                const cmpRequired = false;
+                const priceGranularity = {
+                    "buckets": [
+                        {
+                            "precision": 2,
+                            "min": 0,
+                            "max": 5,
+                            "increment": 0.01
+                        },
+                        {
+                            "precision": 2,
+                            "min": 5,
+                            "max": 8,
+                            "increment": 0.05
+                        },
+                        {
+                            "precision": 2,
+                            "min": 8,
+                            "max": 20,
+                            "increment": 0.5
+                        },
+                        {
+                            "precision": 2,
+                            "min": 21,
+                            "max": 99,
+                            "increment": 1.00
+                        }
+                    ]
+                };
+            
+                pbjs.que.push(function() {
+                    pbjs.aliasBidder('smartadserver', 'smartadserverAlias');
+                    pbjs.setConfig({
+                        gvlMapping: {
+                            smartadserverAlias: 45,
+                        }
+                    });
+                                        
+                     pbjs.setBidderConfig({
+                        bidders: ['smartadserverAlias'],
+                        config: {
+                            schain: {
+                                validation: "relaxed",
+                                config: {
+                                    ver:"1.0",
+                                    complete: 1,
+                                    nodes: [{"asi":"sunmedia.tv","sid":"455be357-ad46-4f10-8872-701656980003","hp":1}]
+                                }
+                            },
+                        }
+                    });
+                     
+                     if (cmpRequired) {
+                        pbjs.setConfig({
+                            consentManagement: {
+                                cmpApi: 'iab',
+                                timeout: 8000,
+                                allowAuctionWithoutConsent: true
+                            },
+                        })
+                    }
+            
+                    pbjs.setConfig({
+                        enableTIDs: true,
+                        priceGranularity,
+                        schain: {
+                            validation: "strict",
+                            config: {
+                                ver:"1.0",
+                                complete: 1,
+                                nodes: [{"asi":"yourbow.com","sid":"64","hp":1},{"asi":"adpone.com","sid":"0764e1b55cf9992e246a","hp":1}]
+                            }
+                        },
+                        gdpr: {
+                          rules: [
+                              {
+                                  vendorExceptions: ['smartadserverAlias']
+                              }
+                          ]  
+                        },
+                        userSync: {
+                            /* only these bidders are allowed to sync.  Both iframe and image pixels are permitted. */
+                            filterSettings: {
+                                all: {
+                                    bidders: ['sovrn'],
+                                    filter: 'exclude'
+                                }
+                            },
+                        }
+                    });
+            
+                    pbjs.addAdUnits(adUnits);
+                    pbjs.requestBids({
+                        bidsBackHandler: initAdserver,
+                        timeout: PREBID_TIMEOUT
+                    });
+                });
+            
+                function initAdserver() {
+                    if (false) {
+                        loadLabel()
+                    }
+                    
+                    
+                    if (pbjs.initAdserverSet) return;
+                    pbjs.initAdserverSet = true;
+                    googletag.cmd.push( () => {
+                        pbjs.que.push( () => {
+                            pbjs.setTargetingForGPTAsync();
+                            googletag.pubads().refresh();
+                            const winnerBids = pbjs.getAllPrebidWinningBids();
+                        });
+                    });
+                }
+            
+                setTimeout(function() {
+                    initAdserver();
+                }, FAILSAFE_TIMEOUT);
+                
+                googletag.cmd.push(function() {
+                    googletag.defineSlot('/21671350435,22684505004/300x250-nature.com', [[300,250]], 'div-gpt-ad-359122865531-0').addService(googletag.pubads());
+                    googletag.pubads().enableSingleRequest();
+                    googletag.enableServices();
+                    addRenderListener();
+                });
+                
+                
+            </script>
+            
+            <div id="div-gpt-ad-359122865531-0" data-google-query-id="COaJ8s2cu4gDFbHJFgUdkpM5Dg">
+                
+            <div id="google_ads_iframe_/21671350435,22684505004/300x250-nature.com_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/21671350435,22684505004/300x250-nature.com_0" name="google_ads_iframe_/21671350435,22684505004/300x250-nature.com_0" title="3rd party ad content" width="300" height="250" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" aria-label="Advertisement" tabindex="0" allow="private-state-token-redemption;attribution-reporting" style="border: 0px; vertical-align: bottom;" data-google-container-id="hjepcigqpl2k" data-load-complete="true" src="./saved_resource(37).html"></iframe></div></div>
+            
+        
+    <iframe src="./aframe(1).html" width="0" height="0" style="display: none;"></iframe></body><iframe name="goog_topics_frame" src="./topics_frame(1).html" style="display: none;"></iframe><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;limited&quot;,&quot;isActive&quot;:false,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration><iframe name="ifrm_openx" src="./topics_frame(2).html" style="display: none;"></iframe><iframe name="ifrm_onetag" src="./topicsapi.html" style="display: none;"></iframe><iframe name="ifrm_rtbhouse" src="./topicsapi(1).html" style="display: none;"></iframe><iframe name="ifrm_pubmatic" src="./topics_frame(3).html" style="display: none;"></iframe><iframe sandbox="allow-scripts allow-same-origin" id="20ce86411fafb6f" frameborder="0" allowtransparency="true" marginheight="0" marginwidth="0" width="0" hspace="0" vspace="0" height="0" style="height:0px;width:0px;display:none;" scrolling="no" src="./saved_resource(38).html">
+    </iframe><iframe sandbox="allow-scripts allow-same-origin" id="2140b54b8c67419" frameborder="0" allowtransparency="true" marginheight="0" marginwidth="0" width="0" hspace="0" vspace="0" height="0" style="height:0px;width:0px;display:none;" scrolling="no" src="./async_usersync.html">
+    </iframe><iframe sandbox="allow-scripts allow-same-origin" id="226a1b79c85068a" frameborder="0" allowtransparency="true" marginheight="0" marginwidth="0" width="0" hspace="0" vspace="0" height="0" style="height:0px;width:0px;display:none;" scrolling="no" src="./user_sync.html">
+    </iframe></html>

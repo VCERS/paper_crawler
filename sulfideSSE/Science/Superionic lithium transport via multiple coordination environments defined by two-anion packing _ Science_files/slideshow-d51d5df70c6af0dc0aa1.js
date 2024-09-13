@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[42],{725:function(e,n,o){"use strict";o.r(n);var t=o(56);n.default=function main(e){var n=Array.prototype.slice.call(document.getElementsByClassName("slideshow"));try{n.length&&(e.slideShow=n.map((function(e){return e.closest("#journal-menu")?null:new t.a(e)})))}catch(e){console.error(e)}}}}]);
+//# sourceMappingURL=slideshow-d51d5df70c6af0dc0aa1.js.map

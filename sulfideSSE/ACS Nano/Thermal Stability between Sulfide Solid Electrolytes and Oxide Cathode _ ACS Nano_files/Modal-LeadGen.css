@@ -1,0 +1,153 @@
+.my-container {
+    background-color: #FFFFFF;
+    height: 487px;
+    width: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* margin: auto; */
+    gap: 10px;
+}
+
+.my-modal-image-container {
+    height: 100%;
+}
+
+.desk-image {
+    max-height: 100%;
+    width: auto;
+    height: 100%;
+    min-width: 265px;
+    /* width: 100%; */
+}
+
+.mobile-image {
+    display: none;
+}
+
+@media (max-width: 850px) {
+    .my-container {
+        height: auto;
+        width: 340px;
+        display: flex;
+        flex-direction: column;
+        gap: 0px;
+    }
+
+    .desk-image {
+        display: none
+    }
+
+    .mobile-image {
+        display: block;
+        width: 340px;
+        height: auto;
+    }
+
+    .close-button {
+        color: #ffffff !important;
+    }
+
+    .my-modal-text-container {
+        margin-left: 0px !important;
+    }
+
+    .my-modal-text-container-heading {
+        margin: 0px;
+        font-size: 24px;
+    }
+
+
+    .my-modal-text-container-button {
+        margin: 25px 0px;
+    }
+
+    .my-modal-text-container.my-container {
+        align-items: center !important;
+    }
+
+    .my-modal-text-container-heading {
+        padding: 10px;
+        margin-top: 10px;
+        text-align: center !important;
+        /* margin-right: 0px !important; */
+    }
+
+    .signup-text {
+        margin: 16px auto;
+        text-align: center;
+    }
+
+    a.my-modal-text-container-button {
+        margin: 16px auto 25px auto;
+    }
+
+    .close-button {
+        top: 1px !important;
+    }
+}
+
+.my-main-container {
+    z-index: 1000;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.6), 1px 5px 25px 8px rgba(0, 0, 0, 0.5);
+}
+
+.close-button {
+    z-index: 5;
+    position: absolute;
+    top: 5.5px;
+    right: 8px;
+    cursor: pointer;
+    font-size: 25px;
+    padding: 10px;
+    color: #000000;
+    font-weight: 900;
+}
+
+.my-modal-text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-left: 30px;
+    padding: 15px;
+}
+
+.my-modal-text-container-heading {
+    text-align: left;
+    color: #0039a6;
+    /* margin-right: 30px; */
+}
+
+.my-modal-text-container-button {
+    background-color: #fec82a;
+    color: #000000;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 7px;
+    margin: 20px 0px;
+    font-weight: 900;
+}
+
+.signup-text {
+    color: #000000;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(97, 97, 97, 0.388);
+    backdrop-filter: blur(0px);
+    z-index: 999;
+    display: none;
+}
