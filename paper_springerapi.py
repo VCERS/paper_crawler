@@ -144,8 +144,7 @@ def springer_url_finder(query):
 def crawl_contect_webpage():
     # Make sure gp-search.csv exist  
     while not os.path.isfile(join(script_path, 'gp-search.csv')):
-        print(
-            '\nYou should do this steps in order ro run this code:\n\t* Use Search_Url_Finder.py to Download CSV file which contain url of each patent\n\t* Copy it (CSV file) to path where this code exist\n\t* Rename it to gp-search.csv\n')
+        print('\nYou should do this steps in order ro run this code:\n\t* Use Search_Url_Finder.py to Download CSV file which contain url of each patent\n\t* Copy it (CSV file) to path where this code exist\n\t* Rename it to gp-search.csv\n')
         print("\ngp-search.csv doesn't find. It should exist where this code exist\n")
         temp_ = input('\nPlease copy the file and  press Enter\n')
     # Import search-gp.csv as dataframe

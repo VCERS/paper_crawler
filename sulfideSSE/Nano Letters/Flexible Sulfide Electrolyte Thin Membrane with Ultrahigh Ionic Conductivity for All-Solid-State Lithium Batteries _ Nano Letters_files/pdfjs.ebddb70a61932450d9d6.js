@@ -1,1 +1,0 @@
-(window.figshareJsonp=window.figshareJsonp||[]).push([[11],{1262:function(n,i){},1264:function(n,i){},1284:function(n,i){},1285:function(n,i){},1286:function(n,i){}}]);

@@ -42,6 +42,8 @@ import markdownify, glob
 from markdownify import MarkdownConverter   # Convert HTML to markdown, see https://github.com/AI4WA/Docs2KG
 import strip_markdown
 
+from doi2bibtex.resolve import resolve_doi
+
 import json, warnings
 import requests
 from time import sleep
@@ -108,13 +110,63 @@ def get_mate_item(bs, attrs_value='dc.title'):
     # Extract the content attribute
     item_content = ""
     if meta_tag and 'content' in meta_tag.attrs:
-        item_content = meta_tag['content']        
+        item_content = meta_tag['content']            
 
     return item_content
 
 
+# Extract bibtex information from the HTML file, using https://github.com/timothygebhard/doi2bibtex
+def get_bib_doi(bs, cls_name='Reference'):
+    # Get DOI from the meta tags in the HTML file
+    meta_doi_tags = ["dc.identifier", "publication_doi", "citation_doi", "prism.doi"]
+    for meta_tag in meta_doi_tags:
+        meta_doi = bs.find('meta', attrs={'name': meta_tag})['content']
+        if meta_doi :  
+            break
+    
+    # Resolve the DOI to get the bibtex information    
+    doi_pattern = r'^10\.\d{4,9}/[-._;()/:A-Z0-9]+$'
+    if re.match(doi_pattern, meta_doi, re.IGNORECASE) is not None:  # Check if the DOI is valid
+        bib_info = resolve_doi(meta_doi)
+
+    # Extract the reference attribute
+    properties = {}  # Extract key information
+    node_reference = globals()[cls_name]
+    for att_array in node_reference.__all_properties__: 
+            attr = att_array[0]
+            if attr == "type":
+                properties[attr] = bib_info.get('ENTRYTYPE')
+            elif attr == "authors":
+                # Split the string on " and "
+                authors_list = bib_info.get('author').split(" and ")
+                # Clean up each part and format the output
+                properties[attr] = [author.replace(',', '').strip() for author in authors_list]
+                print(properties[attr])
+            elif attr == "published_name":
+                properties[attr] = bib_info.get('journal')
+            elif attr == "doi":               
+                properties[attr] = meta_doi
+            elif attr == "published_date":
+                properties[attr] = bib_info.get('year')
+            else:
+                properties[attr] = bib_info.get(attr)
+
+    print(properties)
+     # Create the JSON template
+    json_bib = {node_reference.__name__: {"properties": properties,}}
+    
+    json_bibfile = json.dumps(json_bib, indent=4, ensure_ascii=False)
+    print(json_bibfile)
+    # Write to a JSON file
+    save_path = os.path.abspath(os.path.dirname(bibfile))
+    with open(os.path.join(save_path, f'Reference.json'), 'w', encoding='utf-8') as json_file:
+        json_file.write(json_bibfile)    
+
+    return json_bibfile
+
+
 # Extract the content of the articles published in the journal "Advanced Energy Materials", 'Advanced Materials'
-def extract_springAEM_artical(html_file_path="", content_class='main-content', md_path='rstdir'):
+def extract_wiley_artical(html_file_path="", content_class='main-content', md_path='rstdir'):
 
     # Read the HTML file
     with open(html_file_path, "r") as file:
@@ -122,6 +174,28 @@ def extract_springAEM_artical(html_file_path="", content_class='main-content', m
     # Use Beautidulsoup to extract information from html
     bs = BeautifulSoup(html, 'html.parser')
     print("Extracting data from", html_file_path)
+
+    get_bib_doi(bs)
+
+
+    pulisher = bs.find('meta', attrs={'property': 'og:site_name'})
+    reference_info = {}
+    if pulisher['content'] in ['Wiley Online Library', 'Nature']:
+        # meta_title = bs.find('meta', attrs={'property': 'og:title'})['content']
+        # meta_title = get_mate_item(bs, 'og:title')
+        # paper_title = re.sub(r'/', '', meta_title)
+        meta_tags = ['og:title', "og:type", 'og:url', 'citation_doi']
+    elif pulisher['content'] in ["ACS Publications"]:
+        meta_tags = ['og:title', "og:type", 'og:url', "publication_doi"]
+    else:
+        meta_tags = ['og:title', "og:type", 'og:url', 'publication_doi']
+
+    key_infos = ['title','type','url','doi']
+    for key_info, meta_tag in zip(key_infos, meta_tags):
+        reference_info[key_info] = get_mate_item(bs, meta_tag)
+    print(articles_data)
+
+
 
     # paper_title = bs.find(class_=title_class)
     meta_title = bs.find('meta', attrs={'property': 'og:title'})
@@ -132,9 +206,11 @@ def extract_springAEM_artical(html_file_path="", content_class='main-content', m
     # print(paper_title) 
     # Find the meta tag with name "dc.title"
     # meta_tags = ['dc.title','prism.publicationName','prism.publicationDate','prism.doi']
-    # for meta_tag in meta_tags:
-    #     articles_data.append({meta_tag: get_mate_item(bs, meta_tag)})
-    # print(articles_data)
+    meta_title_tags = ['og:title', 'dc.title','prism.publicationName','prism.publicationDate','prism.doi']
+    meta_doi_tags = ['publication_doi','citation_doi','dc.identifier','prism.doi']
+    meta_url_tags = ['og:url', 'prism.url']    
+
+   
  
     # Extract description 
     # desc = bs.find(class_=content_class)
@@ -178,6 +254,9 @@ def extract_spring_artical(html_file_path, content_class, md_path='rstdir'):
         file.write(str(bs))
 
     print("Extracting data from", html_file_path)
+
+    get_bib_doi(bs)
+
     # paper_title = bs.find(class_=title_class)
     meta_title = bs.find('meta', attrs={'property': 'og:title'})
     paper_title = meta_title['content']
@@ -193,16 +272,23 @@ def extract_spring_artical(html_file_path, content_class, md_path='rstdir'):
  
     # Extract description 
     # desc = bs.find(class_=content_class)
-    desc_arr = bs.find_all('section', class_=[content_class])
+    # desc_arr = bs.find_all('section', class_=[content_class])
+
+    # desc_arr = bs.find_all('div', class_=['article_content-left'])  # ACS
+    desc_arr = bs.find_all('div', class_=['main-content'])   #Nature Communications
     
     # Remove all <a> tags and their content
     for desc in desc_arr:
         for a in desc.find_all('a'):
-            a.decompose()  # This removes the tag and its content      
+            a.decompose()  # This removes the tag and its content
+ 
         # Remove spaces before <i> or after </i> in the HTML content using regular expressions
         desc_str_no_spaces = re.sub(r'\s+(?=<i>)|(?<=</i>)\s+', '', str(desc))
         desc_str_no_spaces = re.sub(r'\s+(?=<sub>)|(?<=</sub>)\s+', '', desc_str_no_spaces)  # remove spaces before <sub> or after </sub>
+        
         desc_str_no_spaces = re.sub(r'\[.*?\]', '', desc_str_no_spaces)  # remove []  
+        desc_str_no_spaces = re.sub(r'\(\)', '', desc_str_no_spaces)  # remove () 
+        desc_str_no_spaces = re.sub(r'\s*(<img\s*[\d\s]+\s*>)\s*', '', desc_str_no_spaces) # remove content between <img and >
 
         articles_data = articles_data + '\n' + desc_str_no_spaces
 
@@ -230,9 +316,10 @@ if __name__ == "__main__":
     
     
     # Directory to search
-    jounal_name = 'Advanced Energy Materials'
-    jounal_name = 'Advanced Materials'
-    jounal_name = 'wiley Small'
+    jounal_name = 'wiley Advanced Energy Materials0'
+    # jounal_name = 'wiley Advanced Materials'
+    # jounal_name = 'wiley Small'
+    # jounal_name = 'Science'
     dir_path = join(dir_path, 'sulfideSSE', jounal_name) 
 
     # Use glob to find all .html files
@@ -240,10 +327,12 @@ if __name__ == "__main__":
     html_files = glob.glob(join(dir_path, '*.html'), recursive=True)
 
     content_cls = 'main-content'
-    content_cls = 'article-section__content'   # ['Advanced Energy Materials','Advanced Materials']
+    # content_cls = 'article-section__content'   # ['wiley Advanced Energy Materials','wiley Advanced Materials', 'wiley Small']
     # content_cls = 'article__tags__list'
 
     # Print the paths of all .html files
     for html_file in html_files:
         if os.path.isfile(html_file):
             extract_spring_artical(html_file, content_cls)
+
+
