@@ -59,7 +59,7 @@ function schemaArticle(articleType) {
       var authors = AAASdataLayer.page.pageInfo.author.split("|");
       for (let i = 0; i < authors.length; i++) {
         if (articleType == 'NewsArticle') {
-          let url="https://www.science.org/content/author/"+authors[i].toLowerCase().replaceAll(/[\.]/gi,"").replaceAll(" ","-");
+          let url="https://www-science-org.eproxy.lib.hku.hk/content/author/"+authors[i].toLowerCase().replaceAll(/[\.]/gi,"").replaceAll(" ","-");
           authorArray.push({"@type": "Person", "name": authors[i], "url": url});
         } else if (articleType == 'Article' || articleType == "BlogPosting") {
           authorArray.push({"@type": "Person", "name": authors[i] });
@@ -87,10 +87,10 @@ function schemaArticle(articleType) {
       "publisher": {
         "@type": "Organization",
         "name": "American Association for the Advancement of Science",
-        "url": "https://www.aaas.org/",
+        "url": "https://www-aaas-org.eproxy.lib.hku.hk/",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://feeds.science.org/images/AAAS-and-Science-color.webp"
+          "url": "https://feeds-science-org.eproxy.lib.hku.hk/images/AAAS-and-Science-color.webp"
         }
       }
     }
@@ -143,27 +143,27 @@ function schemaJournalBreadcrumbs() {
     switch (aaasProgram) {
         case 'science':
             var name1 = "Science";
-            var item1 = "https://www.science.org/journal/science";
+            var item1 = "https://www-science-org.eproxy.lib.hku.hk/journal/science";
         break;
         case 'sciadv':
             var name1 = "Science Advances";
-            var item1 = "https://www.science.org/journal/sciadv";
+            var item1 = "https://www-science-org.eproxy.lib.hku.hk/journal/sciadv";
         break;
         case 'sciimmunol':
             var name1 = "Sci. Immunol.";
-            var item1 = "https://www.science.org/journal/sciimmunol";
+            var item1 = "https://www-science-org.eproxy.lib.hku.hk/journal/sciimmunol";
         break;
         case 'scirobotics':
             var name1 = "Science Robotics";
-            var item1 = "https://www.science.org/journal/scirobotics";
+            var item1 = "https://www-science-org.eproxy.lib.hku.hk/journal/scirobotics";
         break;
         case 'signaling':
             var name1 = "Science Signaling";
-            var item1 = "https://www.science.org/journal/signaling";
+            var item1 = "https://www-science-org.eproxy.lib.hku.hk/journal/signaling";
         break;
         case 'stm':
             var name1 = "Sci. Transl. Med.";
-            var item1 = "https://www.science.org/journal/stm";
+            var item1 = "https://www-science-org.eproxy.lib.hku.hk/journal/stm";
         break;
         default:
             return;
@@ -210,13 +210,13 @@ function schemaJournalBreadcrumbs() {
             "@type": "ListItem",
             "position": 2,
             "name": display_articleType,
-            "item": "https://www.science.org/toc/"+aaasProgram+"/"+volume+"/"+issue
+            "item": "https://www-science-org.eproxy.lib.hku.hk/toc/"+aaasProgram+"/"+volume+"/"+issue
           }
 //           {
 //             "@type": "ListItem",
 //             "position": 2,
 //             "name": displayDate,
-//             "item": "https://www.science.org/toc/"+aaasProgram+"/"+volume+"/"+issue
+//             "item": "https://www-science-org.eproxy.lib.hku.hk/toc/"+aaasProgram+"/"+volume+"/"+issue
 //           }
       ]
     }
@@ -236,23 +236,23 @@ function schemaNewsBreadcrumbs() {
     switch (aaasProgram) {
       case 'scienceshots':
           var name3 = "ScienceShots";
-          var item3 = "https://www.science.org/news/scienceshots";
+          var item3 = "https://www-science-org.eproxy.lib.hku.hk/news/scienceshots";
       break;
       case 'sifter':
           var name3 = "Sifter";
-          var item3 = "https://www.science.org/news/sifter";
+          var item3 = "https://www-science-org.eproxy.lib.hku.hk/news/sifter";
       break;
       case 'scienceinsider':
           var name3 = "ScienceInsider";
-          var item3 = "https://www.science.org/news/scienceinsider";
+          var item3 = "https://www-science-org.eproxy.lib.hku.hk/news/scienceinsider";
       break;
       case 'feature-article':
           var name3 = "News Features";
-          var item3 = "https://www.science.org/news/features";
+          var item3 = "https://www-science-org.eproxy.lib.hku.hk/news/features";
       break;
       case 'latest-news':
           var name3 = "Latest News";
-          var item3 = "https://www.science.org/news/all-news";
+          var item3 = "https://www-science-org.eproxy.lib.hku.hk/news/all-news";
       break;
       default:
           return;
@@ -265,12 +265,12 @@ function schemaNewsBreadcrumbs() {
 //         "@type": "ListItem",
 //         "position": 1,
 //         "name": "Science",
-//         "item": "https://www.science.org/"
+//         "item": "https://www-science-org.eproxy.lib.hku.hk/"
 //       },{
         "@type": "ListItem",
         "position": 1,
         "name": "News",
-        "item": "https://www.science.org/news"
+        "item": "https://www-science-org.eproxy.lib.hku.hk/news"
       },{
         "@type": "ListItem",
         "position": 2,

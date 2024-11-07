@@ -3,7 +3,7 @@
     if (cs) {
         var uo = cs.getAttribute('data-ueto');
         if (uo && w[uo] && typeof w[uo].setUserSignals === 'function') {
-            w[uo].setUserSignals({'co': c, 'kc': k, 'at': a, 'bi': b, 'dt': t, 'ec': e});
+            w[uo].setUserSignals({'ea': c, 'kc': k, 'at': a, 'bi': b, 'dt': t, 'ec': e});
         }
     }
-})(window, document, 'hk', false, false, false, false, false);
+})(window, document, false, false, false, false, false, false);

@@ -484,3 +484,20 @@ display: none;
 #fv__lightbox > div.fv__toolbar > div.fv__toolbar__holster > a.fv__share {
 	display:none
 }*/
+
+
+/* AAAS-3329 */
+.login-content {
+  min-height: 10rem;
+}
+
+.login-content__links li {
+  font-weight: 400;
+  margin-bottom: .5rem;
+}
+
+.login-content__links li {
+  display: block;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}

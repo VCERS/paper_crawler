@@ -299,22 +299,12 @@ def extract_artical(html_file_path="", md_path='rstdir'):
         file.write(str(markdown_content))
 
 # (2) html2text
-    with open("tmp.html", "w") as file:
-        file.write(artical_date)
+    # with open("tmp.html", "w") as file:
+    #     file.write(artical_date)
 
     textfile = join(script_path, md_path, artical_title + ".txt")
     with open(textfile, "w") as file:
-        # file.write(desc.get_text().replace(r'\n', '\n'))  # Replace '\n' with actual newline characters
-        # x = "This is a string\nwith\nnewlines\n"        
-        # s = x.replace(r'\n', '\n')
-
-        # import html2text
-        # file.write(html2text.HTML2Text().handle(artical_date))
-
-        x = desc.get_text().split('\n')
-        for line in x:
-            file.write(line + '\n')        
-
+        file.write(str(markdown_content))
 
 
 
