@@ -12,13 +12,11 @@ This code extract this information from patents page from Google Patents and sto
     - ID
     - Description
     - Publication Date
-    - URL
-    
+    - URL    
 
 This code create two files in the code directory :
     patents_data.csv --> Contain all information scraped from patents pages
     not_scrap_pickle --> Contain all pantents from gp-search.csv which weren't scrapped 
-
 
 
 ====Libraries used:
@@ -49,7 +47,7 @@ import json, warnings
 import requests
 from time import sleep
 
-script_path = os.path.dirname(os.path.abspath(__file__))
+
 warnings.filterwarnings('ignore')
 
 def springer_url_finder(query):
@@ -158,8 +156,7 @@ def get_bib_doi(bs, store_dir, cls_name='Reference', contain_affiliation=False):
         meta_doi = bs.find('meta', attrs={'name': meta_tag})
         if meta_doi is not None: 
             meta_doi = meta_doi['content']
-            break
-    
+            break    
     
     # Resolve the DOI to get the bibtex information    
     doi_pattern = r'^10\.\d{4,9}/[-._;()/:A-Z0-9]+$'
@@ -193,28 +190,21 @@ def get_bib_doi(bs, store_dir, cls_name='Reference', contain_affiliation=False):
         else:
             properties[attr] = bib_info.get(attr)
 
-    print(properties)
-     # Create the JSON template
-    json_bib = {node_reference.__name__: {"properties": properties,}}    
+    # print(properties)    
+    json_bib = {node_reference.__name__: {"properties": properties,}}    # Create the JSON template 
     json_bibcontent = json.dumps(json_bib, indent=4, ensure_ascii=False)
-    print(json_bibcontent)
+    # print(json_bibcontent)
     # Write to a JSON file
     json_name = re.sub(r'/', '_', meta_doi)
-    bib2json_path = join(script_path, store_dir, json_name + ".json")
+    bib2json_path = join(store_dir, json_name + ".json")
     with open(bib2json_path, 'w', encoding='utf-8') as json_file:
         json_file.write(json_bibcontent)    
 
     return "DOI: " + meta_doi, paper_title
 
 
-def html2text(html):
-
-
-    return text
-
-
 # Extract the content of the articles published in the journal "Advanced Energy Materials", 'Advanced Materials'
-def extract_artical(html_file_path="", md_path='rstdir'):
+def extract_artical(html_file_path, store_dir):
     # Read the HTML file
     with open(html_file_path, "r") as file:
         html = file.read()
@@ -222,7 +212,7 @@ def extract_artical(html_file_path="", md_path='rstdir'):
     bs = BeautifulSoup(html, 'html.parser')
     print("Extracting data from", html_file_path)
 
-    artical_doi, artical_title = get_bib_doi(bs, md_path)
+    artical_doi, artical_title = get_bib_doi(bs, store_dir)
 
 # Extract description
     pulisher = bs.find('meta', attrs={'property': 'og:site_name'})['content']    
@@ -242,17 +232,32 @@ def extract_artical(html_file_path="", md_path='rstdir'):
     artical_date = artical_doi        
     for desc in desc_arr:
         # Remove all <img> tags and their content
-        remove_tags = ['img', 'ol','button']
+        remove_tags = ['img', 'figure','ol','button','span']
         for rm_tag in remove_tags:
-            for dese_tag in desc.find_all(rm_tag):            
-                dese_tag.replace_with(" ")
+            for dese_tag in desc.find_all(rm_tag): 
+                if rm_tag in ['img', 'ol','button']:
+                    dese_tag.replace_with(' ')
+                elif rm_tag in ['span']:
+                    if dese_tag.find('a') is not None:  #Wiley
+                        dese_tag.extract()
+                    span_tagcls = dese_tag.get('class')
+                    if span_tagcls is not None:
+                        if span_tagcls[0] in ['mathjax-tex']:  # Nature
+                            dese_tag.extract()  # Removes the <span> tag along with its contents
+                else:
+                    dese_tag.extract()
+                    # pass                
 
         # Find the div with the specific class and remove its contents
-        remove_divs = ['loa-wrapper loa-authors hidden-xs desktop-authors', 'authorInformationSection', 'article__copy', 'ack']
+        remove_divs = ['loa-wrapper loa-authors hidden-xs desktop-authors', 'c-article-section__figure-description', 'authorInformationSection', 'article__copy', 'ack', 'c-article-equation', 'c-article-equation__content']
         for rm_div in remove_divs:
-            for dese_div in desc.find_all('div', class_=rm_div): 
-                # print(dese_div.get('class'), "----", dese_div.text)           
+            for dese_div in desc.find_all('div', class_=rm_div):         
                 dese_div.replace_with(" ")
+
+        remove_elements = ['figure'] # Remove the <figure> element
+        for rm_elem in remove_elements:
+            for dese_elem in desc.find_all(rm_elem):
+                dese_elem.extract()
 
         for div_pra in desc.find_all('div', class_=['NLM_p']):
             div_pra.insert_before(bs.new_tag('br'))
@@ -262,26 +267,27 @@ def extract_artical(html_file_path="", md_path='rstdir'):
 
         extract_tags =  ['sub', 'i', 'sup']
         for ext_tag in extract_tags:
-            for a_tag in desc.find_all(ext_tag):               
-                a_tag.replace_with(a_tag.text)
+            for a_tag in desc.find_all(ext_tag): 
+                if ext_tag is 'sup' and (a_tag.get_text() in ['[',']'] or a_tag.find('a') is not None):
+                    a_tag.extract()
+                else:
+                    a_tag.replace_with(a_tag.text)
 
         for a_tag in desc.find_all('a'):            
             if a_tag.get('class') is not None:
+                # print("===***===",a_tag.get('class'))
                 if a_tag.get('class')[0] in ['open-in-viewer', 'suppLink', 'ext-link', 'internalNav']:                    
                     a_tag.replace_with(a_tag.text)  # Replace the <a> tag with its text content
-                elif a_tag.get('class')[0] in ['ref']:
-                    a_tag.replace_with('')
+                elif a_tag.get('class')[0] in ['ref', 'bibLink', 'article__tags__link', 'open-figure-link', 'ppt-figure-link']:  # Remove ACS references
+                    a_tag.extract()
                 else:                       
                     a_tag.replace_with(" ") 
             else:
                 if a_tag.get('role') in ["doc-biblioref"] or a_tag.get('href').find("https://onlinelibrary.wiley.com") != -1 or a_tag.get('href').find("https://www.nature.com/") != -1:
                     a_tag.replace_with(a_tag.text)
                 else:
-                    a_tag.replace_with(" ")    
- 
-        # Remove spaces before <i> or after </i> using regular expressions
-        # desc_str_no_spaces = re.sub(r'\s+(?=<i>)|(?<=</i>)\s+', '', str(desc))
-        # desc_str_no_spaces = re.sub(r'\s+(?=<sub>)|(?<=</sub>)\s+', '', desc_str_no_spaces)  # Remove spaces before <sub> or after </sub>        
+                    a_tag.replace_with(" ")
+
         # desc_str_no_spaces = re.sub(r'\[.*?\]', ' ', desc_str_no_spaces)  # Remove []  
         # desc_str_no_spaces = re.sub(r'\(\)', ' ', desc_str_no_spaces)  # Remove () 
 
@@ -290,19 +296,20 @@ def extract_artical(html_file_path="", md_path='rstdir'):
 # (1) html2Markdown
     # Create a new BeautifulSoup object from the modified HTML content
     extract_html = BeautifulSoup(artical_date, 'html.parser')
-    mdfile = join(script_path, md_path, artical_title + ".md")
+    mdfile = join(store_dir, artical_title + ".md")
     with open(mdfile, "w") as file:
         # markdown_content = md(desc, strong_em_symbol="", escape_misc=False)  # Convert HTML to markdown
-        markdown_content = MarkdownConverter(strip=['img', 'ol'], strong_em_symbol="", escape_misc=False).convert_soup(extract_html)
+        markdown_content = MarkdownConverter(strip=['img', 'figure', 'ol'], strong_em_symbol="", escape_misc=False).convert_soup(extract_html)
         markdown_content = re.sub(r'\n', '\n\n', str(markdown_content))
         markdown_content = re.sub(r'\n\s*\n', '\n\n', str(markdown_content))   # Merge consecutive empty lines into a single empty line
         file.write(str(markdown_content))
 
 # (2) html2text
-    # with open("tmp.html", "w") as file:
-    #     file.write(artical_date)
+    with open("tmp.html", "w") as file:
+        file.write(artical_date)
 
-    textfile = join(script_path, md_path, artical_title + ".txt")
+#   strip_markdown.strip_markdown_file(store_dir)  # Converts markdown to plain text
+    textfile = join(store_dir, artical_title + ".txt")    
     with open(textfile, "w") as file:
         file.write(str(markdown_content))
 
@@ -374,33 +381,26 @@ def extract_spring_artical(html_file_path, content_class, md_path='rstdir'):
         # strip_markdown.strip_markdown_file(mdfile, join(script_path, md_path))
 
 
-if __name__ == "__main__":    
-
-    dir_path = os.path.dirname(os.path.realpath(__file__))
+if __name__ == "__main__": 
+    current_dir = os.path.dirname(os.path.abspath(__file__))
     # htmlfile = "/home/hktai/Downloads/Characterizing Students’ 4C Skills Development During Problem-based Digital Making _ Journal of Science Education and Technology.html"
     
     # Directory to search
-    jounal_name = 'wiley Advanced Energy Materials'
-    # jounal_name = 'wiley Advanced Materials'
-    jounal_name = 'wiley Small'
-    # jounal_name = 'Science'
-    # jounal_name = 'Nature Energy'
-    # jounal_name = 'Nature Communications'
-    jounal_name = 'ACS Energy Letters'
-    # jounal_name = 'ACS Nano'
-    # jounal_name = 'ACS Nano Letters'
-    
-
-    dir_path = join(dir_path, 'sulfideSSE', jounal_name) 
-
-    # Use glob to find all .html files
-    # html_files = glob.glob(join(dir_path, '**', '*.html'), recursive=True)
+    jounal_name = ['wiley Advanced Energy Materials', 'wiley Advanced Materials', 'wiley Small', 'Nature Energy', 'Nature Communications']
+    # jounal_name = ['Science', 'ACS Energy Letters', 'ACS Nano', 'ACS Nano Letters'] 
+    dir_path = join(current_dir, 'sulfideSSE', jounal_name[0]) 
     html_files = glob.glob(join(dir_path, '*.html'), recursive=True)
+
+    # html_files = ['/home/hktai/Downloads/aia/paper_crawler/rstdir/110.html']
+
+# Use glob to find all .html files
+    dir_path = join(current_dir, 'sulfideSSE')     
+    html_files = glob.glob(join(dir_path, '*', '*.html'), recursive=True)    
 
     # Print the paths of all .html files
     for html_file in html_files:
         if os.path.isfile(html_file):
-            extract_artical(html_file)
+            extract_artical(html_file, join(current_dir, 'rstdir'))
             # extract_spring_artical(html_file)
 
 
